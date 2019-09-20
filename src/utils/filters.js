@@ -153,7 +153,7 @@ export function toThousandslsFilter(num) {
 }
 
 export function hashFormat(hash) {
-  if (hash === "") {
+  if (!hash) {
     return "";
   }
   return `${hash.slice(0, 7)}....${hash.slice(-5)}`;

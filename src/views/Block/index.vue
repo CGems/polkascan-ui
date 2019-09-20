@@ -135,10 +135,10 @@ export default {
     },
     async getBlockData(page = 0) {
       const data = await this.$api["polkaGetBlocks"]({ row: 25, page });
-      this.blockData = data.blocks;
+      this.blockData = data.rows;
       this.total = +data.count;
       if (page == 0) {
-        this.$store.commit("SET_LATEST_BLOCKS", data.blocks);
+        this.$store.commit("SET_LATEST_BLOCKS", data.rows);
       }
       this.isLoading = false;
     },
