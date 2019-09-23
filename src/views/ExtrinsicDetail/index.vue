@@ -93,7 +93,10 @@
             <div class="info-item">
               <div class="label">Value</div>
               <div class="value align-items-center">
-                <balances :amount="extrinsicInfo.transfer.amount" :module="extrinsicInfo.transfer.module"></balances>
+                <balances
+                  :amount="extrinsicInfo.transfer.amount"
+                  :module="extrinsicInfo.transfer.module"
+                ></balances>
               </div>
             </div>
           </template>
@@ -185,7 +188,7 @@ import SearchInput from "@/views/Components/SearchInput";
 import { timeAgo, parseTimeToUtc, hashFormat } from "Utils/filters";
 import clipboard from "Directives/clipboard";
 import { mapState } from "vuex";
-import Balances from './Balances'
+import Balances from "./Balances";
 
 export default {
   name: "ExtrinsicDetail",
@@ -255,19 +258,20 @@ export default {
       this.activeTab = "event";
     },
     formatSymbol(module) {
-      if(!this.$const[`SYMBOL/${this.sourceSelected}`]){
-        return ''
+      if (!this.$const[`SYMBOL/${this.sourceSelected}`]) {
+        return "";
       }
 
-      return this.$const[`SYMBOL/${this.sourceSelected}`][module].value || '';
+      return this.$const[`SYMBOL/${this.sourceSelected}`][module].value || "";
     },
     async getExtrinsicInfo() {
       const key = this.$route.params.key;
-      const reg = /^[0-9]+-[0-9]+$/;
-      const isNum = reg.test(key);
-      this.$api["polkaGetExtrinsicByKey"]({
-        [isNum ? "extrinsic_index" : "hash"]: key
-      })
+      this.$api["polkaGetExtrinsicByKey"](
+        {},
+        {
+          url: `/v1/extrinsic/${key}`
+        }
+      )
         .then(res => {
           if (res === null) {
             return Promise.reject(res);

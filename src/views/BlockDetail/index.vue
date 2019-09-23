@@ -274,28 +274,29 @@ export default {
     },
     async getBlockInfo() {
       const key = this.$route.params.key;
-      const reg = /^[0-9]+$/;
-      const isNum = reg.test(key);
-      this.$api["polkaGetBlockByKey"]({
-        [isNum ? "block_num" : "block_hash"]: isNum ? +key : key
-      })
+      this.$api["polkaGetBlockByKey"](
+        {},
+        {
+          url: `/v1/block/${key}`
+        }
+      )
         .then(res => {
           if (res === null) {
             return Promise.reject(res);
           }
           this.notFound = false;
-          res.extrinsics.forEach(item => {
-            item.params = JSON.parse(item.params);
-          });
-          res.events.forEach(item => {
-            let params = JSON.parse(item.params);
-            item.params = params.filter(param => {
-              return param.type;
-            });
-          });
-          res.logs.forEach(item => {
-            item.data = JSON.parse(item.data);
-          });
+          // res.extrinsics.forEach(item => {
+          //   item.params = JSON.parse(item.params);
+          // });
+          // res.events.forEach(item => {
+          //   let params = JSON.parse(item.params);
+          //   item.params = params.filter(param => {
+          //     return param.type;
+          //   });
+          // });
+          // res.logs.forEach(item => {
+          //   item.data = JSON.parse(item.data);
+          // });
           this.blockInfo = res;
           this.blockNum = res.block_num;
           this.isLoading = false;
