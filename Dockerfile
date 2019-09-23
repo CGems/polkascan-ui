@@ -7,6 +7,8 @@ RUN apk update
 
 RUN apk add yarn
 
+RUN rm -rf /var/cache/apk/*
+
 RUN yarn config set registry https://registry.npm.taobao.org/
 
 COPY package.json ./
