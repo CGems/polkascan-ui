@@ -63,9 +63,6 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="block_timestamp" label="Age" width="180">
-            <template slot-scope="scope">{{scope.row.block_timestamp|timeAgo}}</template>
-          </el-table-column>
           <el-table-column prop="success" label="Result" width="120">
             <template slot-scope="scope">
               <icon-svg class="icon" :icon-class="scope.row.success?'success':'failed'" />
@@ -162,10 +159,7 @@ export default {
         signed: this.signedChecked ? "signed" : "all",
         address: this.$route.query.address
       });
-      data.extrinsics.forEach(item => {
-        item.params = JSON.parse(item.params);
-      });
-      this.extrinsicsData = data.extrinsics;
+      this.extrinsicsData = data.rows;
       this.total = +data.count;
       this.isLoading = false;
     },

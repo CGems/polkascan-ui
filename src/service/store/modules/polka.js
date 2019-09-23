@@ -36,7 +36,7 @@ export default {
     },
     async SetLatestBlocks({commit}, payload) {
       const data = await polkaGetBlocks(payload);
-      commit("SET_LATEST_BLOCKS", data.blocks);
+      commit("SET_LATEST_BLOCKS", data.rows);
     },
     // async SetLatestExtrinsics({ commit }, payload) {
     //   const data = await polkaGetExtrinsics(payload);

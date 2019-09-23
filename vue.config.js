@@ -85,7 +85,7 @@ module.exports = {
     },
     proxy: {
       "^/api": {
-        target: "https://crayfish.subscan.io", // 接口的域名
+        target: "http://127.0.0.1:8081", // 接口的域名
         // target: "https://kusama.subscan.io", // 接口的域名
         secure: true, // 如果是https接口，需要配置这个参数
         changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
