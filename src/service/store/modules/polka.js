@@ -44,7 +44,7 @@ export default {
     // },
     async SetTransfers({commit}, payload) {
       const data = await polkaGetTransfers(payload);
-      commit("SET_TRANSFERS", data.transfers);
+      commit("SET_TRANSFERS", data.rows);
     },
     async SetDailyChart({commit}, payload) {
       let emptyDailyData = [];
@@ -59,7 +59,7 @@ export default {
       }
       const data = await polkaGetDaily(payload);
 
-      data.list.forEach((item) => {
+      data.forEach((item) => {
         const timeLabel = moment(item.time_utc).format("YYYY-MM-DD");
         const index = _.findIndex(emptyDailyData, {time: timeLabel});
         emptyDailyData[index] = {

@@ -24,7 +24,7 @@ export const VUEX_DEFAULT_CONFIG = {
 // API 默认配置
 export const API_DEFAULT_CONFIG = {
   baseURL: '/api',
-  isTestEnv: process.env.NODE_ENV === 'production' ? false : false,
+  isTestEnv: process.env.NODE_ENV === 'production' ? false : true,
   testEnvBaseURLPrefix: '/test',
   apiKey: '30f098f2217b1e3be'
 }

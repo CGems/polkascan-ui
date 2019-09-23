@@ -174,7 +174,7 @@ export default {
 
   methods: {
     init() {
-      if (this.transfers.length > 0) {
+      if (this.transfers && this.transfers.length > 0) {
         this.transfersData = this.transfers;
       } else {
         this.isLoading = true;
@@ -187,11 +187,11 @@ export default {
         page,
         address: this.$route.query.address
       });
-      this.transfersData = data.transfers || [];
+      this.transfersData = data.rows || [];
       this.total = +data.count;
       this.isLoading = false;
       if (page == 0) {
-        this.$store.commit("SET_TRANSFERS", data.transfers);
+        this.$store.commit("SET_TRANSFERS", data.rows);
       }
     },
     downloadClick() {
