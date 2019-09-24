@@ -5,7 +5,7 @@
         <div class="metadata-item">
           <icon-svg class="icon" icon-class="latest-blocks"></icon-svg>
           <div class="label">Latest Blocks</div>
-          <count-to class="value" :end="Number(metadata.blockNum||0)" :duration="0.8" :decimal="0" />
+          <count-to class="value" :end="Number(metadata.block_num||0)" :duration="0.8" :decimal="0" />
         </div>
       </router-link>
     </div>
@@ -21,7 +21,7 @@
         <div class="metadata-item">
           <icon-svg class="icon" icon-class="signed-extrinsics"></icon-svg>
           <div class="label">Signed Extrinsics</div>
-          <count-to class="value" :end="Number(metadata.count_signed_extrinsic||0)" :duration="0.8" :decimal="0" />
+          <count-to class="value" :end="Number(metadata.total_extrinsics_signed||0)" :duration="0.8" :decimal="0" />
         </div>
       </router-link>
     </div>
@@ -29,7 +29,7 @@
       <div class="metadata-item">
         <icon-svg class="icon" icon-class="module-events"></icon-svg>
         <div class="label">Module Events</div>
-        <count-to class="value" :end="Number(metadata.count_event||0)" :duration="0.8" :decimal="0" />
+        <count-to class="value" :end="Number(metadata.total_events||0)" :duration="0.8" :decimal="0" />
       </div>
     </div>
 
