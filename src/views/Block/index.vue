@@ -19,11 +19,11 @@
             <template slot-scope="scope">{{scope.row.block_timestamp|timeAgo}}</template>
           </el-table-column>
           <el-table-column prop="extrinsics_count" label="Extrinsics" width="120">
-            <template slot-scope="scope">
+            <!-- <template slot-scope="scope">
               <div :class="{link:scope.row.extrinsics_count>0}">
                 <span>{{scope.row.extrinsics_count}}</span>
               </div>
-            </template>
+            </template> -->
           </el-table-column>
           <el-table-column prop="event_count" label="Events" width="120">
             <!-- <template slot-scope="scope">
