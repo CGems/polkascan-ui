@@ -108,9 +108,6 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column prop="block_timestamp" label="Age" fit>
-                  <template slot-scope="scope">{{scope.row.block_timestamp|timeAgo}}</template>
-                </el-table-column>
                 <el-table-column prop="success" label="Result" fit>
                   <template slot-scope="scope">
                     <icon-svg class="icon" :icon-class="scope.row.success?'success':'failed'" />
@@ -145,7 +142,7 @@
             >
               <el-table :data="blockInfo.events" style="width: 100%">
                 <el-table-column prop="event_index" label="Event ID" fit></el-table-column>
-                <el-table-column prop="extrinsic_hash" label="Hash" fit>
+                <!-- <el-table-column prop="extrinsic_hash" label="Hash" fit>
                   <template slot-scope="scope">
                     <div
                       class="link"
@@ -161,7 +158,7 @@
                       </el-tooltip>
                     </div>
                   </template>
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column label="Action" fit>
                   <template slot-scope="props">{{`${props.row.module_id}(${props.row.event_id})`}}</template>
                 </el-table-column>

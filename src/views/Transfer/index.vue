@@ -181,7 +181,7 @@ export default {
       }
       this.getTransferData();
     },
-    async getTransferData(page = 0) {
+    async getTransferData(page = 1) {
       const data = await this.$api["polkaGetTransfers"]({
         row: 25,
         page,
@@ -190,7 +190,7 @@ export default {
       this.transfersData = data.rows || [];
       this.total = +data.count;
       this.isLoading = false;
-      if (page == 0) {
+      if (page == 1) {
         this.$store.commit("SET_TRANSFERS", data.rows);
       }
     },
@@ -229,7 +229,7 @@ export default {
       );
     },
     currentChange(pageSize) {
-      this.getTransferData(--pageSize);
+      this.getTransferData(pageSize);
     }
   }
 };
