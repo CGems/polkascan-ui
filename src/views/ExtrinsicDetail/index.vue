@@ -24,10 +24,10 @@
           />
         </div>
         <div class="extrinsic-info-list subscan-card" v-loading="isLoading">
-          <div class="info-item">
+          <!-- <div class="info-item">
             <div class="label">Time</div>
             <div class="value">{{extrinsicInfo.block_timestamp|parseTimeToUtc}}</div>
-          </div>
+          </div> -->
           <div class="info-item">
             <div class="label">Block</div>
             <div
@@ -132,14 +132,14 @@
         >
           <el-tabs v-model="activeTab">
             <el-tab-pane
-              :label="`Events${extrinsicInfo.event.length>0?` (${extrinsicInfo.event.length})`:''}`"
+              :label="`Events${extrinsicInfo.events.length>0?` (${extrinsicInfo.events.length})`:''}`"
               name="event"
             >
-              <el-table :data="extrinsicInfo.event" style="width: 100%">
+              <el-table :data="extrinsicInfo.events" style="width: 100%">
                 <el-table-column label="Event ID" fit>
                   <template slot-scope="props">{{props.row.event_index}}</template>
                 </el-table-column>
-                <el-table-column label="Hash" fit>
+                <!-- <el-table-column label="Hash" fit>
                   <template>
                     <div
                       class="link"
@@ -155,7 +155,7 @@
                       </el-tooltip>
                     </div>
                   </template>
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column label="Action" fit>
                   <template slot-scope="props">{{`${props.row.module_id}(${props.row.event_id})`}}</template>
                 </el-table-column>
@@ -277,14 +277,14 @@ export default {
             return Promise.reject(res);
           }
           this.notFound = false;
-          if (res.event) {
-            res.event.forEach(item => {
-              let params = JSON.parse(item.params);
-              item.params = params.filter(param => {
-                return param.type;
-              });
-            });
-          }
+          // if (res.events) {
+          //   res.events.forEach(item => {
+          //     let params = JSON.parse(item.params);
+          //     item.params = params.filter(param => {
+          //       return param.type;
+          //     });
+          //   });
+          // }
           this.extrinsicInfo = res;
           this.extrinsicNum = res.extrinsic_index;
           this.isLoading = false;
