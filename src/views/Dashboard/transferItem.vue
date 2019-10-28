@@ -33,9 +33,7 @@
           </el-tooltip>
         </div>
       </div>
-      <div
-        class="right"
-      >{{`${transferData.amount} ${this.formatSymbol(transferData.module)}`}}</div>
+      <div class="right">{{`${transferData.amount} RC`}}</div>
     </div>
   </div>
 </template>
@@ -62,15 +60,7 @@ export default {
   filters: {
     timeAgo
   },
-  methods: {
-    formatSymbol(module) {
-      if(!this.$const[`SYMBOL/${this.sourceSelected}`]){
-        return ''
-      }
-
-      return this.$const[`SYMBOL/${this.sourceSelected}`][module].value || '';
-    }
-  }
+  methods: {}
 };
 </script>
 

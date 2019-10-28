@@ -8,66 +8,20 @@
           <router-link class="nav-item" to="/extrinsic" tag="li" active-class="choosed">Extrinsics</router-link>
           <router-link class="nav-item" to="/transfer" tag="li" active-class="choosed">Transfers</router-link>
         </ul>
-        <!-- <el-dropdown class="dropdown" trigger="click">
-          <span class="el-dropdown-link align-items-center">
-            <div :class="`network-button ${sourceSelectedValue}-button`"></div>
-
-
-          </span>
-          <el-dropdown-menu slot="dropdown" class="menu-dropdown">
-            <li
-              class="menu-dropdown-item align-items-center"
-              v-for="item in sourceList"
-              :key="item.value"
-            >
-              <i class="choosed-icon" :class="{show: sourceSelected===item.value}"></i>
-              <span
-                class="menu-dropdown-item-label"
-                @click="changeSource(item.value)"
-              >{{item.label}}</span>
-            </li>
-          </el-dropdown-menu>
-        </el-dropdown> -->
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
 export default {
   name: "NavBar",
   data() {
-    return {
-      sourceList: [
-        {
-          label: "Crayfish",
-          value: "darwinia"
-        },
-        {
-          label: "Kusama",
-          value: "kusama"
-        }
-      ]
-    };
-  },
-  computed: {
-    sourceSelectedValue() {
-      return this.sourceList.find(item => {
-        return item.value === this.sourceSelected;
-      }).value;
-    },
-    ...mapState({
-      sourceSelected: state => state.global.sourceSelected
-    })
+    return {};
   },
   methods: {
     changeLanguage(language) {
       GLOBAL.vbus.$emit("CHANGE_LANGUAGE", language);
       this.$store.dispatch("SetLanguage", language);
-    },
-    changeSource(source) {
-      // this.$store.dispatch("SetSourceSelected", source);
-      window.location.href = this.$const[`SYMBOL/${source}`]['domain']['value'];
     }
   }
 };
@@ -124,20 +78,23 @@ export default {
         }
       }
 
-      .network-button{
+      .network-button {
         width: 116px;
         height: 30px;
-        background: url("../../assets/images/crayfish-button.png") no-repeat left center;
+        background: url("../../assets/images/crayfish-button.png") no-repeat
+          left center;
         background-size: contain;
       }
 
       .crayfish-button {
-        background: url("../../assets/images/crayfish-button.png") no-repeat left center;
+        background: url("../../assets/images/crayfish-button.png") no-repeat
+          left center;
         background-size: contain;
       }
 
       .kusama-button {
-        background: url("../../assets/images/kusama-button.png") no-repeat left center;
+        background: url("../../assets/images/kusama-button.png") no-repeat left
+          center;
         background-size: contain;
       }
     }

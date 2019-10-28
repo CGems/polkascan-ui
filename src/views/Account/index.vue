@@ -12,7 +12,7 @@
           <div class="no-data">No Data</div>
         </div>
       </template>
-      <template v-else-if="accountInfo.account">
+      <template v-else-if="accountInfo">
         <div class="account-header space-between align-items-center">
           <div class="header-left align-items-center">
             <div class="icon">
@@ -37,11 +37,9 @@
             <div class="desc">
               <div class="desc-item align-items-center no-border-bottom">
                 <div class="label">Balance</div>
-                <div class="value"><balances :amount="accountInfo.account.balance" module="balances"></balances></div>
-              </div>
-              <div class="desc-item align-items-center">
-                <div class="label"></div>
-                <div class="value"><balances :amount="accountInfo.account.kton_balance" module="kton"></balances></div>
+                <div class="value">
+                  <balances :amount="accountInfo.balance" module="balances"></balances>
+                </div>
               </div>
             </div>
           </div>
@@ -50,12 +48,12 @@
             <div class="desc">
               <div class="desc-item align-items-center">
                 <div class="label">Account Index</div>
-                <div class="value">{{accountInfo.account.account_index}}</div>
+                <div class="value">{{accountInfo.account_index}}</div>
               </div>
-              <div class="desc-item align-items-center">
+              <!-- <div class="desc-item align-items-center">
                 <div class="label">Nonce</div>
-                <div class="value">{{accountInfo.account.nonce}}</div>
-              </div>
+                <div class="value">{{accountInfo.nonce}}</div>
+              </div>-->
             </div>
           </div>
         </div>
@@ -65,7 +63,7 @@
               :label="`Transfers${transfersInfo.count>0?` (${transfersInfo.count})`:''}`"
               name="transfer"
             >
-              <el-table :data="transfersInfo.transfers" style="width: 100%">
+              <el-table :data="transfersInfo.rows" style="width: 100%">
                 <el-table-column prop="extrinsic_index" label="Extrinsic ID" width="120">
                   <template slot-scope="scope">
                     <div class="link">
@@ -125,10 +123,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column prop="amount" label="Value" fit>
-                  <template
-                    slot-scope="scope"
-                  >{{`${scope.row.amount} ${scope.row.module==="balances"?'RING':scope.row.module==="kton"?"KTON":''}`}}</template>
-
+                  <template slot-scope="scope">{{`${scope.row.amount} RC`}}</template>
                 </el-table-column>
                 <el-table-column prop="success" label="Result" width="70">
                   <template slot-scope="scope">
@@ -157,7 +152,7 @@
               :label="`Extrinsics${extrinsicsInfo.count>0?` (${extrinsicsInfo.count})`:''}`"
               name="extrinsic"
             >
-              <el-table :data="extrinsicsInfo.extrinsics" style="width: 100%">
+              <el-table :data="extrinsicsInfo.rows" style="width: 100%">
                 <el-table-column prop="extrinsic_index" label="Extrinsic ID" width="160">
                   <template slot-scope="scope">
                     <div class="link">
@@ -194,15 +189,16 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column prop="block_timestamp" label="Age" width="180">
-                  <template slot-scope="scope">{{scope.row.block_timestamp|timeAgo}}</template>
-                </el-table-column>
                 <el-table-column prop="success" label="Result" width="120">
                   <template slot-scope="scope">
                     <icon-svg class="icon" :icon-class="scope.row.success?'success':'failed'" />
                   </template>
                 </el-table-column>
-                <el-table-column prop="call_module" label="Action" width="180"></el-table-column>
+                <el-table-column label="Action" width="200">
+                  <template
+                    slot-scope="scope"
+                  >{{`${scope.row.call_module}(${scope.row.call_module_function})`}}</template>
+                </el-table-column>
                 <el-table-column width="120" type="expand">
                   <template slot-scope="props">
                     <div class="expand-form">
@@ -233,7 +229,7 @@ import Identicon from "@polkadot/vue-identicon";
 import SearchInput from "@/views/Components/SearchInput";
 import { timeAgo, parseTimeToUtc, hashFormat } from "Utils/filters";
 import clipboard from "Directives/clipboard";
-import Balances from '../ExtrinsicDetail/Balances'
+import Balances from "../ExtrinsicDetail/Balances";
 
 export default {
   name: "Account",
@@ -256,11 +252,11 @@ export default {
       accountInfo: {},
       transfersInfo: {
         count: 0,
-        transfers: []
+        rows: []
       },
       extrinsicsInfo: {
         count: 0,
-        extrinsics: []
+        rows: []
       },
       activeTab: "transfer",
       notFound: false,
@@ -287,11 +283,11 @@ export default {
     };
   },
   created() {
-    this.address = this.$route.params.key;
+    this.address = this.$route.params.address;
     this.init();
   },
   watch: {
-    "$route.params.key": function() {
+    "$route.params.address": function() {
       this.init();
     }
   },
@@ -303,13 +299,15 @@ export default {
     async getAccountInfo() {
       this.isLoading = true;
       this.isIntroLoading = true;
-      const key = this.$route.params.key;
-      this.$api["polkaGetSearchRes"]({ key, row: 1, page: 0 })
+      const address = this.$route.params.address;
+      this.$api["polkaGetAccountInfo"](
+        {},
+        {
+          url: `/v1/account/${address}`
+        }
+      )
         .then(async res => {
-          if (res === undefined || typeof res.account !== "object") {
-            return Promise.reject();
-          }
-          this.address = res.account.address;
+          this.address = res.address;
           this.accountInfo = res;
           this.notFound = false;
           this.isIntroLoading = false;
@@ -319,8 +317,8 @@ export default {
         .catch(() => {
           this.notFound = true;
           this.accountInfo = {};
-          this.transfersInfo = { count: 0, transfers: [] };
-          this.extrinsicsInfo = { count: 0, extrinsics: [] };
+          this.transfersInfo = { count: 0, rows: [] };
+          this.extrinsicsInfo = { count: 0, rows: [] };
           this.isLoading = false;
           this.isIntroLoading = false;
         });
@@ -331,7 +329,6 @@ export default {
         page: 0,
         address: this.address
       });
-      data.transfers === null && (data.transfers = []);
       this.transfersInfo = data;
     },
     async getExtrinsicInfo() {
@@ -340,10 +337,6 @@ export default {
         page: 0,
         address: this.address,
         signed: "all"
-      });
-      data.extrinsics === null && (data.extrinsics = []);
-      data.extrinsics.forEach(item => {
-        item.params = JSON.parse(item.params);
       });
       this.extrinsicsInfo = data;
     },
@@ -399,7 +392,7 @@ export default {
     .asset,
     .basic {
       width: 580px;
-      height: 171px;
+      height: 120px;
       padding: 10px 0;
       .title {
         padding: 0 20px;

@@ -16,26 +16,17 @@ if (language_bak === null) {
 
 const global = {
   state: {
-    language, // 当前UI语言
-    sourceSelected: getLocalStore("polkascan_source") || "darwinia"
+    language // 当前UI语言
   },
   mutations: {
     SET_LANGUAGE: (state, language) => {
       state.language = language;
-    },
-    SET_SOURCE_SELECTED: (state, source) => {
-      state.sourceSelected = source;
     }
   },
   actions: {
     SetLanguage({ commit }, language) {
       commit("SET_LANGUAGE", language);
       setLocalStore("local_language", language);
-    },
-    SetSourceSelected({ commit }, source) {
-      GLOBAL.vbus.$emit("CHANGE_SOURCE", source);
-      commit("SET_SOURCE_SELECTED", source);
-      setLocalStore("polkascan_source", source);
     }
   }
 };

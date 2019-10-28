@@ -95,7 +95,6 @@
               <div class="value align-items-center">
                 <balances
                   :amount="extrinsicInfo.transfer.amount"
-                  :module="extrinsicInfo.transfer.module"
                 ></balances>
               </div>
             </div>
@@ -256,13 +255,6 @@ export default {
     init() {
       this.getExtrinsicInfo();
       this.activeTab = "event";
-    },
-    formatSymbol(module) {
-      if (!this.$const[`SYMBOL/${this.sourceSelected}`]) {
-        return "";
-      }
-
-      return this.$const[`SYMBOL/${this.sourceSelected}`][module].value || "";
     },
     async getExtrinsicInfo() {
       const key = this.$route.params.key;

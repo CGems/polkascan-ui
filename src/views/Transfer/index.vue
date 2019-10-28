@@ -83,7 +83,7 @@
           <el-table-column prop="amount" label="Value" fit>
             <template
               slot-scope="scope"
-            >{{`${scope.row.amount} ${scope.row.module==="balances"?'RING':scope.row.module==="kton"?"KTON":''}`}}</template>
+            >{{`${scope.row.amount} RC`}}</template>
           </el-table-column>
           <el-table-column prop="success" label="Result" width="70">
             <template slot-scope="scope">

@@ -52,7 +52,7 @@ export default [
     method: "GET",
     desc: "获取单个块数据",
     baseURL: "",
-    path: "/v1/block",
+    path: "/v1/block/:key",
     options: {
       noShowDefaultError: true
     }
@@ -62,17 +62,17 @@ export default [
     method: "GET",
     desc: "获取单个extrinsics数据",
     baseURL: "",
-    path: "/v1/extrinsic",
+    path: "/v1/extrinsic/:key",
     options: {
       noShowDefaultError: true
     }
   },
   {
-    name: "getSearchRes",
+    name: "getAccountInfo",
     method: "GET",
-    desc: "获取搜索结果",
+    desc: "获取账户信息",
     baseURL: "",
-    path: "/v1/search",
+    path: "/v1/account/:address",
     options: {
       noShowDefaultError: true
     }

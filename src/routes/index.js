@@ -35,7 +35,7 @@ export default [
   },
   {
     name: "account",
-    path: "/account/:key",
+    path: "/account/:address",
     component: () => import(/* webpackChunkName: "account" */ "Views/Account")
   },
   {

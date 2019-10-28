@@ -181,7 +181,6 @@
             <el-tab-pane v-if="blockInfo.logs&&blockInfo.logs.length" label="Log" name="log">
               <el-table :data="blockInfo.logs" style="width: 100%">
                 <el-table-column prop="log_index" label="Log Index" fit></el-table-column>
-                <el-table-column prop="block_num" label="Block" fit></el-table-column>
                 <el-table-column prop="log_type" label="Type" fit></el-table-column>
                 <el-table-column width="120" type="expand">
                   <template slot-scope="props">
@@ -282,18 +281,6 @@ export default {
             return Promise.reject(res);
           }
           this.notFound = false;
-          // res.extrinsics.forEach(item => {
-          //   item.params = JSON.parse(item.params);
-          // });
-          // res.events.forEach(item => {
-          //   let params = JSON.parse(item.params);
-          //   item.params = params.filter(param => {
-          //     return param.type;
-          //   });
-          // });
-          // res.logs.forEach(item => {
-          //   item.data = JSON.parse(item.data);
-          // });
           this.blockInfo = res;
           this.blockNum = res.block_num;
           this.isLoading = false;
