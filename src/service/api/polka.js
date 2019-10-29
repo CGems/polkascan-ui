@@ -82,7 +82,7 @@ export default [
     method: "GET",
     desc: "判断blockHash还是extrinsicHash",
     baseURL: "",
-    path: "/v1/check_hash",
+    path: "/v1/checkHash",
     options: {
       noShowDefaultError: true
     }
