@@ -50,10 +50,10 @@
                 <div class="label">Account Index</div>
                 <div class="value">{{accountInfo.account_index}}</div>
               </div>
-              <!-- <div class="desc-item align-items-center">
+              <div class="desc-item align-items-center">
                 <div class="label">Nonce</div>
                 <div class="value">{{accountInfo.nonce}}</div>
-              </div>-->
+              </div>
             </div>
           </div>
         </div>
@@ -392,7 +392,7 @@ export default {
     .asset,
     .basic {
       width: 580px;
-      height: 120px;
+      height: 171px;
       padding: 10px 0;
       .title {
         padding: 0 20px;
