@@ -265,18 +265,7 @@ export default {
         }
       )
         .then(res => {
-          if (res === null) {
-            return Promise.reject(res);
-          }
           this.notFound = false;
-          // if (res.events) {
-          //   res.events.forEach(item => {
-          //     let params = JSON.parse(item.params);
-          //     item.params = params.filter(param => {
-          //       return param.type;
-          //     });
-          //   });
-          // }
           this.extrinsicInfo = res;
           this.extrinsicNum = res.extrinsic_index;
           this.isLoading = false;
@@ -285,7 +274,7 @@ export default {
           this.isLoading = false;
           this.extrinsicNum = undefined;
           this.extrinsicInfo = {};
-          if (err === null || err.code === -400) {
+          if (err.code === '1021') {
             this.notFound = true;
           }
         });

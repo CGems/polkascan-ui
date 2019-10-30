@@ -15,7 +15,7 @@
       <template v-else>
         <div class="block-detail-header space-between align-items-center">
           <div class="header-left">
-            <div class="arrow-icon" @click="goBlockNum(-1)">
+            <div class="arrow-icon" :class="{disabled:blockNum===0}" @click="goBlockNum(-1)">
               <icon-svg class="icon" icon-class="arrow-left" />
             </div>
             <div class="block-num">{{`Block#${blockNum}`}}</div>
@@ -158,7 +158,7 @@
                       </el-tooltip>
                     </div>
                   </template>
-                </el-table-column> -->
+                </el-table-column>-->
                 <el-table-column label="Action" fit>
                   <template slot-scope="props">{{`${props.row.module_id}(${props.row.event_id})`}}</template>
                 </el-table-column>
@@ -277,9 +277,6 @@ export default {
         }
       )
         .then(res => {
-          if (res === null) {
-            return Promise.reject(res);
-          }
           this.notFound = false;
           this.blockInfo = res;
           this.blockNum = res.block_num;
@@ -289,13 +286,16 @@ export default {
           this.isLoading = false;
           this.blockNum = undefined;
           this.blockInfo = {};
-          if (err === null || err.code === -400) {
+          if (err.code === "1021") {
             this.notFound = true;
           }
         });
     },
     goBlockNum(direction) {
       if (this.blockNum !== undefined) {
+        if (direction === -1 && this.blockNum === 0) {
+          return;
+        }
         this.$router.push(`/block/${this.blockNum + direction}`);
       }
     },
@@ -328,6 +328,10 @@ export default {
         font-size: 26px;
         border-radius: 4px;
         cursor: pointer;
+        &.disabled {
+          background-color: #c1c1c1;
+          cursor: not-allowed;
+        }
       }
       .block-num {
         padding: 0 16px;
