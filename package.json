@@ -22,7 +22,7 @@
     "element-ui": "^2.4.6",
     "lodash": "^4.17.10",
     "md5": "^2.2.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "normalize.css": "^8.0.0",
     "nprogress": "^0.2.0",
     "oo7-substrate": "^0.8.0",
